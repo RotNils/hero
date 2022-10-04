@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Game {
     Boolean Running = true;
     private TerminalScreen screen;
-    Hero hero;
+    Arena arena;
     public Game(int width, int height) throws IOException{
         TerminalSize terminalSize = new TerminalSize(width, height);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
@@ -17,29 +17,16 @@ public class Game {
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
-        hero = new Hero(10,10);
+        arena = new Arena(10,10);
     }
 
     public void draw() throws IOException{
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
     private void processKey(KeyStroke key) throws IOException{
-        System.out.println(key);
         switch (key.getKeyType().toString()){
-            case "ArrowUp":
-                moveHero(hero.moveUp());
-                break;
-            case "ArrowDown":
-                moveHero(hero.moveDown());
-                break;
-            case "ArrowLeft":
-                moveHero(hero.moveLeft());
-                break;
-            case "ArrowRight":
-                moveHero(hero.moveRight());
-                break;
             case "Character":
                 if (key.getCharacter() == 'q') {
                     Running = false;
@@ -49,10 +36,8 @@ public class Game {
             case "EOF":
                 Running = false;
                 break;
+            default: arena.processKey(key);
         }
-    }
-    public void moveHero(Position position){
-        hero.setPosition(position);
     }
     public void run() throws IOException{
         while (Running) {
