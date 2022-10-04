@@ -29,16 +29,16 @@ public class Game {
         System.out.println(key);
         switch (key.getKeyType().toString()){
             case "ArrowUp":
-                hero.moveUp();
+                moveHero(hero.moveUp());
                 break;
             case "ArrowDown":
-                hero.moveDown();
+                moveHero(hero.moveDown());
                 break;
             case "ArrowLeft":
-                hero.moveLeft();
+                moveHero(hero.moveLeft());
                 break;
             case "ArrowRight":
-                hero.moveRight();
+                moveHero(hero.moveRight());
                 break;
             case "Character":
                 if (key.getCharacter() == 'q') {
@@ -50,6 +50,9 @@ public class Game {
                 Running = false;
                 break;
         }
+    }
+    public void moveHero(Position position){
+        hero.setPosition(position);
     }
     public void run() throws IOException{
         while (Running) {
