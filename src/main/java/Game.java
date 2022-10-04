@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Game {
     Boolean Running = true;
-    private TerminalScreen screen;
+    private final TerminalScreen screen;
     Arena arena;
     public Game(int width, int height) throws IOException{
         TerminalSize terminalSize = new TerminalSize(width, height);

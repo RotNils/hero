@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class Application {
     public static void main(String[] args) throws IOException {
-        Game game = new Game(100, 50);
+        Game game = new Game(15, 15);
         game.run();
     }
 }

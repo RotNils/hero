@@ -1,4 +1,3 @@
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.TerminalScreen;
 public class Arena {
@@ -14,18 +13,10 @@ public class Arena {
     public void processKey(KeyStroke key) {
         System.out.println(key);
         switch (key.getKeyType().toString()) {
-            case "ArrowUp":
-                moveHero(hero.moveUp());
-                break;
-            case "ArrowDown":
-                moveHero(hero.moveDown());
-                break;
-            case "ArrowLeft":
-                moveHero(hero.moveLeft());
-                break;
-            case "ArrowRight":
-                moveHero(hero.moveRight());
-                break;
+            case "ArrowUp" -> moveHero(hero.moveUp());
+            case "ArrowDown" -> moveHero(hero.moveDown());
+            case "ArrowLeft" -> moveHero(hero.moveLeft());
+            case "ArrowRight" -> moveHero(hero.moveRight());
         }
     }
     public void moveHero(Position position) {
@@ -34,12 +25,7 @@ public class Arena {
         }
 
     public boolean canHeroMove(Position position){
-        if (position.x > width || position.x < 0 || position.y < 0 || position.y > height){
-            return false;
-        }
-        else
-            return true;
-
+        return position.x <= width && position.x >= 0 && position.y >= 0 && position.y <= height;
     }
 
     public void draw(TerminalScreen screen){
