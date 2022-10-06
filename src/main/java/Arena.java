@@ -33,8 +33,12 @@ public class Arena {
                 hero.setPosition(position);
         }
 
-    public boolean canHeroMove(Position position){
-        return position.x < width - 1 && position.x > 0 && position.y > 0 && position.y < height - 1;
+    public boolean canHeroMove(Position position) {
+        for (Wall wall : walls)
+            if (wall.getPosition().equals(position)) {
+                return false;
+        }
+        return true;
     }
 
     public void draw(TextGraphics screen){
@@ -56,4 +60,6 @@ public class Arena {
         }
         return walls;
     }
+
+
 }
