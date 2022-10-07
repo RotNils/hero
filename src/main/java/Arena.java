@@ -3,7 +3,6 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,16 +13,17 @@ public class Arena {
     private final Hero hero;
     private List<Wall> walls;
     private ArrayList<Coin> coins;
+    private ArrayList<Monster> monsters;
     public Arena(int width, int height) {
         this.width = width;
         this.height = height;
         hero = new Hero(width/2, height/2);
-        this.walls = createWalls();
-        this.coins = createCoins();
+        createWalls();
+        createCoins();
+        createMonster();
     }
 
     public void processKey(KeyStroke key) {
-        System.out.println(key);
         switch (key.getKeyType().toString()) {
             case "ArrowUp" -> moveHero(hero.moveUp());
             case "ArrowDown" -> moveHero(hero.moveDown());
@@ -34,7 +34,10 @@ public class Arena {
     public void moveHero(Position position) {
             if (canHeroMove(position)) {
                 hero.setPosition(position);
+                verifyMonsterCollisions();
                 retrieveCoins();
+                moveMonster();
+                verifyMonsterCollisions();
             }
         }
 
@@ -54,8 +57,10 @@ public class Arena {
             wall.draw(screen);
         for (Coin coin : coins)
             coin.draw(screen);
+        for (Monster monster : monsters)
+            monster.draw(screen);
     }
-    private List<Wall> createWalls() {
+    private void createWalls() {
         walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
             walls.add(new Wall(c, 0));
@@ -65,22 +70,51 @@ public class Arena {
             walls.add(new Wall(0, r));
             walls.add(new Wall(width - 1, r));
         }
-        return walls;
     }
-    private ArrayList<Coin> createCoins() {
+    private void createCoins() {
         Random random = new Random();
         coins = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         }
-        return coins;
     }
     private void retrieveCoins(){
         for (Coin coin : coins){
             if (coin.getPosition().equals(hero.getPosition())) {
                 coins.remove(coin);
+                if(coins.isEmpty()){
+                    System.out.println("YOU WIN !!!!");
+                    System.exit(0);
+                }
                 break;
             }
         }
+    }
+    private void createMonster() {
+        Random random = new Random();
+        monsters = new ArrayList<>();
+        Monster monster;
+        for (int i = 0; i < 5; i++) {
+            monster = new Monster(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1);
+            if(monster.getPosition().equals(hero.getPosition())){
+                i--;
+            }
+            else {
+                monsters.add(monster);
+            }
+        }
+    }
+
+    private void moveMonster(){
+        for (Monster monster : monsters)
+            monster.move();
+    }
+
+    private void verifyMonsterCollisions(){
+        for (Monster monster : monsters)
+           if(monster.getPosition().equals(hero.getPosition())){
+               System.out.println("YOU LOSE !!");
+               System.exit(0);
+           }
     }
 }

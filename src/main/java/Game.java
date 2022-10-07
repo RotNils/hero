@@ -1,5 +1,4 @@
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -7,7 +6,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-    Boolean Running = true;
+    private Boolean Running = true;
     private final TerminalScreen screen;
     Arena arena;
     public Game(int width, int height) throws IOException{
@@ -26,6 +25,7 @@ public class Game {
         arena.draw(screen.newTextGraphics());
         screen.refresh();
     }
+
     private void processKey(KeyStroke key) throws IOException{
         switch (key.getKeyType().toString()){
             case "Character":
@@ -47,5 +47,4 @@ public class Game {
             processKey(key);
         }
     }
-
 }
