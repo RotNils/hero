@@ -13,5 +13,13 @@ public abstract class Element {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public int getX(){
+        return position.x;
+    }
+
+    public int getY(){
+        return position.y;
+    }
     public abstract void draw(TextGraphics screen);
 }
