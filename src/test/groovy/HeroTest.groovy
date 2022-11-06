@@ -48,9 +48,9 @@ class HeroTest extends Specification{
         when:
         hero.draw(screen)
         then:
-        1 * screen.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
-        1 * screen.enableModifiers(SGR.BOLD);
-        1 * screen.putString(new TerminalPosition(hero.getX(), hero.getY()), "X");
+        1 * screen.setForegroundColor(TextColor.Factory.fromString("#FFFF33"))
+        1 * screen.enableModifiers(SGR.BOLD)
+        1 * screen.putString(new TerminalPosition(hero.getX(), hero.getY()), "X")
     }
 
 

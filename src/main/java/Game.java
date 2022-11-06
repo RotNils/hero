@@ -6,8 +6,8 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-    private Boolean Running = true;
-    private final TerminalScreen screen;
+    Boolean Running = true;
+    final TerminalScreen screen;
     Arena arena;
     public Game(int width, int height) throws IOException{
         TerminalSize terminalSize = new TerminalSize(width, height);
@@ -26,7 +26,7 @@ public class Game {
         screen.refresh();
     }
 
-    private void processKey(KeyStroke key) throws IOException{
+    public void processKey(KeyStroke key) throws IOException{
         switch (key.getKeyType().toString()){
             case "Character":
                 if (key.getCharacter() == 'q') {

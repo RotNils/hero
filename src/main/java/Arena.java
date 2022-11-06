@@ -29,6 +29,9 @@ public class Arena {
             case "ArrowDown" -> moveHero(hero.moveDown());
             case "ArrowLeft" -> moveHero(hero.moveLeft());
             case "ArrowRight" -> moveHero(hero.moveRight());
+            default -> {
+                break;
+            }
         }
     }
     public void moveHero(Position position) {
